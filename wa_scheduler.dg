@@ -1,6 +1,6 @@
 // script to periodically check whatsapp number
 // fetch candidate data via searchRecords API
-num = Collection("1","2");
+num = Collection("1");
 page = 0;
 count = 0;
 for each  record in num
@@ -21,6 +21,7 @@ for each  record in num
 	{
 		country_code = cand.getJSON("WhatsApp_Country_Code");
 		default_number = cand.getJSON("WhatsApp_No");
+		phNo = getAlphaNumeric(default_number);
 		whatsapp_no = cand.getJSON("WA_Number_API");
 		cand_id = cand.getJSON("id");
 		linkHeader = "https://recruit.zoho.com/recruit/v2/Candidates";
@@ -63,8 +64,7 @@ for each  record in num
 				//
 				if (numStatus == "valid")
 				{
-					// change EM_MSG_STATUS to null, WA_NUM_STATUS to valid, BROADCAST_TYPE to WhatsApp
-					paramMap = Map();
+					// change WA_NUM_STATUS to valid
 					status = {"WA_NUM_STATUS":numStatus};
 					statusArr = {status};
 					paramMap.put("data",statusArr);
@@ -80,7 +80,7 @@ for each  record in num
 				}
 				else if (numStatus == "invalid")
 				{
-					// change WA_MSG_STATUS to null, WA_NUM_STATUS to invalid, BROADCAST_TYPE to Email
+					// change WA_NUM_STATUS to invalid
 					paramMap = Map();
 					status = {"WA_NUM_STATUS":numStatus};
 					statusArr = {status};
